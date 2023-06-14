@@ -342,13 +342,27 @@ steps:
             description: ""
             hashColumns: []
             hashDetails: null
-            name: O_ORDERPRIORITY
+            name: O_ORDERPRIORITY_NUM
             nullable: false
             sourceColumnReferences:
               - columnReferences:
                   - columnCounter: b06265a3-2de7-4bd1-87fc-e41bc4d65e69
                     stepCounter: 00cd2fbf-4835-46d7-a499-f87005bd9659
-                transform: ""
+                transform: SPLIT_PART("STG_ORDERS"."O_ORDERPRIORITY", '-', 1 )
+          - columnReference:
+              columnCounter: 1b5a9bde-7f68-486f-a96e-753975e4d529
+              stepCounter: 31bb3835-fd79-4625-a35c-106e4b163207
+            dataType: VARCHAR(15)
+            description: ""
+            hashColumns: []
+            hashDetails: null
+            name: O_ORDERPRIORITY_DESC
+            nullable: false
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: b06265a3-2de7-4bd1-87fc-e41bc4d65e69
+                    stepCounter: 00cd2fbf-4835-46d7-a499-f87005bd9659
+                transform: SPLIT_PART("STG_ORDERS"."O_ORDERPRIORITY", '-', 2 )
           - columnReference:
               columnCounter: 73a406b3-ce98-4850-a45a-ce1464eaad73
               stepCounter: 31bb3835-fd79-4625-a35c-106e4b163207
@@ -391,6 +405,28 @@ steps:
                   - columnCounter: bb15ae52-85e6-48a2-9059-80a43295c5e8
                     stepCounter: 00cd2fbf-4835-46d7-a499-f87005bd9659
                 transform: ""
+          - acceptedValues:
+              strictMatch: true
+              values: []
+            appliedColumnTests: {}
+            columnReference:
+              columnCounter: 5565fef7-cde7-4039-9543-ab868af661a9
+              stepCounter: 31bb3835-fd79-4625-a35c-106e4b163207
+            config: {}
+            dataType: NUMBER
+            defaultValue: ""
+            description: ""
+            keyColumnType: None
+            name: DAYS_TO_SHIP
+            nullable: true
+            sourceColumnReferences:
+              - columnReferences:
+                  - columnCounter: "0"
+                    stepCounter: "0"
+                transform: |
+                  DATEDIFF('DAY',"STG_ORDERS"."O_ORDERDATE","STG_LINEITEM"."L_SHIPDATE")
+            systemColumnType: None
+            transform: ""
         cteString: ""
         enabledColumnTestIDs: []
         sourceMapping:
